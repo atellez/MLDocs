@@ -1,0 +1,64 @@
+
+## Example to better understand Nearest Neighbor Algorithm using R-Package: "caret"
+
+## Step 1: Get Iris Dataset from R and do some exploratory analysis
+data(iris)
+str(iris)
+summary(iris)
+## str is short for 'structure' and allows us to examine the data structure that sits behind the dataset: Iris.  This is extremely useful when loading new data.
+## Note that this is a classification problem in that we are trying to predict the Iris type: Versicolor, Virginica, or Setosa which is the column 'Species'
+
+## Now let's plot a histogram of that looks at Sepal Length and it's frequency within the dataset
+hist(iris$Sepal.Length)
+
+#Suppose we want to see how many classes of Iris we have in our dataset? We can generate a table of our outcome variable, 'Species' as such:
+table(iris$Species)
+#What do you think this does?
+prop.table(table(iris$Species))
+
+## Step 2: Shuffle the Deck
+## Notice how in our original dataset (literally type in 'iris' in R) you will see how the first 50 datapoints all correspond to 'Setosa', the next 50 are all 'versicolor' and the final 50 are all 'viriginca'.
+## If we didn't shuffle our dataset and let's say we trained a model on the first 100 samples, our model would only learn either setosa or versicolor and not viriginca. We don't want that so before we split into training and testing we need to shuffle our deck of cards - so to speak so that we get a nice mix of all classes.
+set.seed(1234)
+iris_shuffled <-iris[order(runif(150)),]
+iris_shuffled
+
+## The set seed function is a random number generator that starts from a position known as the 'seed', which in our case is the number '1234'. The reason why we need to 'set the seed' is so that if we were to re-run this analysis again, an identical result can be achieved each time.
+## The runif(150) command generates a random list of 150 numbers. Why 150 and not 155 or 200? Because our Iris dataset has 150 points and thus we need 150 random numbers.
+
+
+## Step 3: Normalize Features
+## When dealing with data - especially distance functions like Nearest Neighbor, K-Means or PCA - it helps to normalize our data.  We can do that one of two ways in R using functions:
+normalize <- function(x) {
+    return ((x - min(x)) / (max(x) - min(x)))
+}
+
+## Okay, so what did we just do? The above function is taking a vector called 'X', and for each value in 'X', we are going to subtract it from the minumum value in 'X' and then divide that difference by the range of values in 'X' (range = highest - lowest values)
+## Once we create this function we can call it - i.e. use it - anytime we like!
+normalize(c(100,200,300,400,500))
+iris_normalized <- as.data.frame(lapply(iris_shuffled[1:4],normalize))
+iris_normalized$Species <- iris_shuffled$Species
+str(iris_normalized)
+
+## Wait...what? So the code above reads like this: Take the first 4 columns in the Iris dataset (which is everything BUT the variable 'Species' which is what we are trying to predict) and treat it like a List that we are going to APPLY (<- get it?! lapply) our created function 'normalize'.  Then, return this list as a data frame that we can run a machine learning algorithm from!
+## Notice the difference in datastrucutre when you run these two code snippets:
+lapply(iris_shuffled[1:4],normalize)
+as.data.frame(lapply(iris_shuffled[1:4],normalize))
+## Finally, we append our class variable to our newly transformed data frame (we can only do this BECAUSE we have 2 data frames!)
+
+## Step 4: Split our dataset into Training and Testing
+iris_training <- iris_normalized[1:100,]
+iris_testing <- iris_normalized[101:150,]
+
+## So our training set will have 100 'mixed' samples of Iris flower and our testing set (AKA the holdout set) will have 50 samples of Iris flowers.
+## Because the distribution of Iris flower is balanced - that is, 50 Setosa, 50 Virginca and 50 Versicolor - if we did this correctly we should have the same distribution of Iris flowers in both the training and the testing datasets.
+table(iris_training$Species)
+table(iris_testing$Species)
+
+## Question: Suppose you wanted to see these as percentages, how would you do that? (hint: use 'prop.table')
+
+## Step 5: Train our algorithm, kNN!
+## Whew, finally we are getting to the modeling step. To do this we are first going to call the library(caret) and then start running some models.
+## The basic idea is: 1) Train a model using k=Some number. 2) Test this model against the holdout set (iris_testing) using the 'predict' function. 3) Calculate the Error. 4) Repeat Steps 1-3 until a good model is reached!
+
+library(caret)
