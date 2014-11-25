@@ -4,4 +4,5 @@ MLDocs
 Machine Learning for Dummies
 ======
 Chapter 1: Nearest Neighbor Algorithm
-  Good 'ole Iris Dataset
+
+Dataset used: Iris 
