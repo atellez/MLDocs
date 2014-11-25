@@ -1,9 +1,10 @@
 
 ## Example to better understand Nearest Neighbor Algorithm using R-Package: "caret"
 ## download package from here: http://cran.r-project.org/web/packages/caret/
-## it will mean loading
+## it will mean loading about 20 some packages
 
-## Step 1: Get Iris Dataset from R and do some exploratory analysis
+## Step 1: Get Iris Dataset from R and do some exploratory analysis 
+## iris dataset is pre-loaded into R
 data(iris)
 str(iris)
 summary(iris)
@@ -68,11 +69,11 @@ model_knn3 <- knn3(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.W
 ## Within the package "caret", there is an implementation of the Nearest Neighbor algorithm. In the code above, we are defining our first model which predicts 'Species' using the 4 features of the iris_training dataset. 
 ## The number of datapoints to look at to determine the class of iris (i.e. k = 3) is 3.  So the idea is what are the 3 nearest classes of iris flower (Euclidian distance) to a given training sample.  And then, cast a vote among the 3 cases.  So if 2/3 points are Versicolor and 1/3 is Setosa, the majority = Veriscolor.
 ## We can try a few different models varying the # of neighbors, k, and then at the end see which gives us the best result. 
-## Finally, in this example there are 4 features but in YOUR DATA you might have 100+ features. You don't want to write all that out in R for defining the model.  Instead, R has a nifty cheat which says 'include all these parameters' without having to write out each parameter individually. 
+## Finally, in this example there are 4 features but in YOUR DATA you might have 100+ features. You don't want to write all that out in R for defining the model.  Instead, R has a nifty cheat which says 'include all these parameters' (this is represented by a '.' after the '~') without having to write out each parameter individually. 
 
-model_knn5 <- knn3(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width, k = 5, data = iris_training)
-model_knn7 <- knn3(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width, k = 7, data = iris_training)
-model_knn21 <- knn3(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width, k = 21, data = iris_training)
+model_knn5 <- knn3(Species ~ ., k = 5, data = iris_training)
+model_knn7 <- knn3(Species ~ ., k = 7, data = iris_training)
+model_knn21 <- knn3(Species ~ ., k = 21, data = iris_training)
 
 ## Step 6: Predict the classes or Iris on our holdout dataset, iris_testing
 ## Most algorithms have a 'predict' function that is attached to them that allows us to score a model against a holdout set, which in our case, is the iris_testing dataset.
@@ -81,8 +82,10 @@ model_knn21 <- knn3(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.
 
 knn3_prediction_probs <- predict(model_knn3, iris_testing)
 ## The above returns the posterior probabilities for each class.
+knn3_prediction_probs
 
 knn3_prediction <- predict(model_knn3, iris_testing, type = "class")
+knn3_prediction
 ## This line of code outputs the class that has the highest probability attached to it.
 ## Now, we predict for the rest of our models using the type="class" prediction.
 knn5_prediction <- predict(model_knn5, iris_testing, type = "class")
