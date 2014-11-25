@@ -91,7 +91,7 @@ knn21_prediction <- predict(model_knn21, iris_testing, type = "class")
 ## So now that we have 4 models based on different k-values, and we scored them against our holdout set, it's now time to see how our models did.
 ## The most common way to evaluate classification problems (which this is) is by generating a confusion matrix which shows where the errors/correct predictions are being made.
 ## Let's generate one first and then walk through the interpreation of it all:
-table(true = iris_testing$Species, predicted = knn3_prediction
+table(true = iris_testing$Species, predicted = knn3_prediction)
 
 ## So we are calling the table function again and now we are specifying that the true values is the 'Species' column in our iris_testing dataset and the predictions are going to come from our knn3_prediction which outputs 1 column of iris types.
 ## The output should be a 3 x 3 table and what you're looking for is a 'heavy diagonal' which indicates that actual = predicted.  
