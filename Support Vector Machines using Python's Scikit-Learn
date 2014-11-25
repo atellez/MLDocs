@@ -1,0 +1,30 @@
+
+## Example to learn how to implement a Support Vector Machine (SVM) using Python's Scikit-Learn
+
+## Doing this FIRST requires you to have Scikit-Learn installed on your machine. If you DO NOT have Scikit-Learn installed, please visit the 'How-To-Install _______' section.
+## If you do have Scikit-Learn installed (from now on, we'll just refer to it as 'scikit') then let's jump right in.
+
+## We will apply a Support Vector Machine (SVM) for image recognition and in particular, classifying faces using the Olivetti Faces Dataset.
+## Lucky for you, scikit ships with the Olivetti dataset so we don't have to spend time loading it in (we will learn to do that in the 'Text Classification Using Naive Bayes Algorithm' chapter!)
+## First let's load our dataset and then look at the overall shape of our dataset.
+import sklearn as sk
+import numpy as np
+import matplotlib.pyplot as plt
+
+## You will see that the above 3 imports are usually the very first lines of code for most examples of scikit learn.
+from sklearn.datasets import fetch_olivetti_faces
+faces = fetch_olivetti_faces
+faces.keys()
+print faces.DESCR
+
+## As you will read in the description ('DESCR'), this dataset contains 400 images of 40 different people. 
+## Each image (face) is a 64 x 64 raw pixel image which means the # of dimensions in our dataset is 4,096 features wide (each pixel is a feature).
+## You can confirm the dataset 'topology' by running the following commands:
+print faces.images.shape
+print faces.data.shape
+
+## Scikit has already identified the outcomes of the faces (i.e. an ID that corresponds to a person's name for each of the 400 images). This is referred to as the 'target' and the raw pixels that are input features is the 'data'.
+print faces.target.shape
+## The answer to the above line of code should be 400 becuase there are 400 images, each of which has an ID that is linked to a person. 
+
+
