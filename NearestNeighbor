@@ -77,7 +77,7 @@ model_knn21 <- knn3(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.
 ## We can predict the iris class and output one of 2 things: The class of iris flower ('Setosa', 'Versicolor', 'Virginica') OR the posterior probabilities for each class ('Setosa' = 30%, 'Versicolor' = 50%, 'Viriginca' = 20%, for example)
 ## This can be accomplished in 2 ways:
 
-knn3_prediction_classes <- predict(model_knn3, iris_testing)
+knn3_prediction_probs <- predict(model_knn3, iris_testing)
 ## The above returns the posterior probabilities for each class.
 
 knn3_prediction <- predict(model_knn3, iris_testing, type = "class")
@@ -86,3 +86,16 @@ knn3_prediction <- predict(model_knn3, iris_testing, type = "class")
 knn5_prediction <- predict(model_knn5, iris_testing, type = "class")
 knn7_prediction <- predict(model_knn7, iris_testing, type = "class")
 knn21_prediction <- predict(model_knn21, iris_testing, type = "class")
+
+## Step 7: Evaluate the various models and see which one is the best!
+## So now that we have 4 models based on different k-values, and we scored them against our holdout set, it's now time to see how our models did.
+## The most common way to evaluate classification problems (which this is) is by generating a confusion matrix which shows where the errors/correct predictions are being made.
+## Let's generate one first and then walk through the interpreation of it all:
+table(true = iris_testing$Species, predicted = knn3_prediction
+
+## So we are calling the table function again and now we are specifying that the true values is the 'Species' column in our iris_testing dataset and the predictions are going to come from our knn3_prediction which outputs 1 column of iris types.
+## The output should be a 3 x 3 table and what you're looking for is a 'heavy diagonal' which indicates that actual = predicted.  
+## Just using this simple model we see that for 3 nearest-neighbors, our model does a pretty good job predicting iris type flowers! Only 2 flowers were incorrectly predicted amongst the holdout set of 50 flowers. Not shabby!
+
+## What are the evaluation metrics for the other models? Do we overfit (i.e. learn our training data too well that we can't predict on the holdout set) when we use too many nearest-neighbors?
+
