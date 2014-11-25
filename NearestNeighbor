@@ -62,3 +62,27 @@ table(iris_testing$Species)
 ## The basic idea is: 1) Train a model using k=Some number. 2) Test this model against the holdout set (iris_testing) using the 'predict' function. 3) Calculate the Error. 4) Repeat Steps 1-3 until a good model is reached!
 
 library(caret)
+model_knn3 <- knn3(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width, k = 3, data = iris_training)
+## Within the package "caret", there is an implementation of the Nearest Neighbor algorithm. In the code above, we are defining our first model which predicts 'Species' using the 4 features of the iris_training dataset. 
+## The number of datapoints to look at to determine the class of iris (i.e. k = 3) is 3.  So the idea is what are the 3 nearest classes of iris flower (Euclidian distance) to a given training sample.  And then, cast a vote among the 3 cases.  So if 2/3 points are Versicolor and 1/3 is Setosa, the majority = Veriscolor.
+## We can try a few different models varying the # of neighbors, k, and then at the end see which gives us the best result. 
+## Finally, in this example there are 4 features but in YOUR DATA you might have 100+ features. You don't want to write all that out in R for defining the model.  Instead, R has a nifty cheat which says 'include all these parameters' without having to write out each parameter individually. 
+
+model_knn5 <- knn3(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width, k = 5, data = iris_training)
+model_knn7 <- knn3(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width, k = 7, data = iris_training)
+model_knn21 <- knn3(Species ~ Sepal.Length + Sepal.Width + Petal.Length + Petal.Width, k = 21, data = iris_training)
+
+## Step 6: Predict the classes or Iris on our holdout dataset, iris_testing
+## Most algorithms have a 'predict' function that is attached to them that allows us to score a model against a holdout set, which in our case, is the iris_testing dataset.
+## We can predict the iris class and output one of 2 things: The class of iris flower ('Setosa', 'Versicolor', 'Virginica') OR the posterior probabilities for each class ('Setosa' = 30%, 'Versicolor' = 50%, 'Viriginca' = 20%, for example)
+## This can be accomplished in 2 ways:
+
+knn3_prediction_classes <- predict(model_knn3, iris_testing)
+## The above returns the posterior probabilities for each class.
+
+knn3_prediction <- predict(model_knn3, iris_testing, type = "class")
+## This line of code outputs the class that has the highest probability attached to it.
+## Now, we predict for the rest of our models using the type="class" prediction.
+knn5_prediction <- predict(model_knn5, iris_testing, type = "class")
+knn7_prediction <- predict(model_knn7, iris_testing, type = "class")
+knn21_prediction <- predict(model_knn21, iris_testing, type = "class")
