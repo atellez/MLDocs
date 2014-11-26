@@ -63,8 +63,20 @@ TO ADD: Eclipse (Kepler)
 		better GUI for R
 		http://www.rstudio.com/products/rstudio/download/
 		download, open, and add to applications folder
-	
-TO ADD: main R packages
+		
+	c. R packages
+		run RStudio
+		in the left box (Console), run the following commands:
+			install.packages("caret") #caret: classification and regression models
+			install.packages("shiny") #shiny: interactive web apps with R
+			install.packages("randomForest") #randomForest: class/regress with trees
+			install.packages("survival") #survival: survival analysis (like Cox)
+			install.packages("ggmap") #ggmap: use google maps in ggplot2 visualizations
+			install.packages("jsonlite") #jsonlite: json parser and generator for R
+			install.packages("httr") #httr: GET, POST, etc straight from R
+			install.packages("sqldf") #sqldf: query and manipulate R data with SQL code
+			install.packages("forecast") #forecast: time series analysis
+			install.packages("h2o") #h2o: run h2o via its REST API from inside R
 
 
 
