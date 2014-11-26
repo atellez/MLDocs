@@ -84,6 +84,7 @@ print svc_sigmoid.score(X_test, y_test) # Eeks...also 0%.
 print "Testing set accuracy for Linear Kernel:"
 print svc_linear.score(X_test, y_test) # ahhh...intersting, I get ~99% Accuracy.
 
+## Step 6: Ask another question about the dataset
 ## Indeed, we see the power of Support Vector Machines and in particular, the linear kernel. But let's keep our healthy skepticism and ask a different question:
 ## Rather than try to classify faces to their IDs, let's see if we can identify those faces that have facial hair from those that do not.
 ## If you want to see for yourself the entire Olivetti faces pictures, copy+paste this into your web-browser: http://www.cs.nyu.edu/~roweis/data/olivettifaces.gif
@@ -94,11 +95,19 @@ facialHair = [
 ]
 
 ## Next, we will need to define a function within Python that says for each of these pictures, label it a '1' and then for all the other pictures (i.e. NO facial hair), label it a '0'.
-def facialHair_targets(ranges)
-  y = np.zeroes(faces.target.shape[0])  # This is a Numpy function which says for the 400 images, make a new column, y, and initialize them with all 0 values.
+def facialHair_targets(ranges):
+  y = np.zeros(faces.target.shape[0])  # This is a Numpy function which says for the 400 images, make a new column, y, and initialize them with all 0 values.
   for (begin, end) in ranges:
     y[begin:end + 1] = 1  # For each of the ranges until the last one we defined in 'facialHair', assign it a value of 1.
   return y
   
+## Note: You will need to hit the return button at least twice for the functioin to be 'locked' and so that you get a new command line which starts with '>>>'  
 ## Finally, we are going to apply this function to our 'facialHair' subset and then check the results (targets should be either 0 or 1 as opposed to 1-40 in the original targets)
 facialHair_target = facialHair_targets(facialHair)
+print facialHair_target.shape # Should return (400, )
+print np.min(facialHair_target), np.max(facialHair_target) # Should return a min of 0 and a max of 1
+print np.min(faces.target), np.max(facialHair_target) # Should return a min of 0 and a max of 39
+## Cool! This means our function worked! Now it's time to retrain our Support Vector Machines and we'll start with the Linear kernel model since that worked well for us last time.
+
+## Step 7: re-split data again into train and testing and score on training datasets.
+## The reason we need to re-split again is because the old y_train and y_test were the original faces.target which had labels numbered 0-39. Now, we are saying use the new target (facialHair_target) which is only labeled 0 to 1.
