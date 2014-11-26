@@ -9,7 +9,6 @@ How to set up a Mac with everything we use for data analysis.
         suggested: add to Dock
 
     b. Skype 
-        ummm... skype? 
         messaging and video conference tool
         http://www.skype.com/en/download-skype/skype-for-computer/
         just download and add to applications folder
@@ -48,12 +47,11 @@ How to set up a Mac with everything we use for data analysis.
 		http://support.apple.com/kb/DL1572
 		download, run installer, accepting defaults
 		
-	b. Maven
+TO ADD: Maven
+TO ADD: Eclipse (Kepler)
+
 	
-	c. Eclipse (Kepler)
-
 		
-
 2. R
 	a. R
 		http://cran.rstudio.com/
@@ -66,8 +64,7 @@ How to set up a Mac with everything we use for data analysis.
 		http://www.rstudio.com/products/rstudio/download/
 		download, open, and add to applications folder
 	
-TO ADD: main packages to install in R
-
+TO ADD: main R packages
 
 
 
@@ -101,6 +98,20 @@ TO ADD: main packages to install in R
 	
 
 
-4. h2o
-       h2o
-      - IntelliJ (14)
+4. H2O
+	a. H2O - latest stable release
+		http://h2o.ai/download/
+		go to latest stable release (Nov 26, 2014: Maxwell 2.8.2.8)
+		download H2O
+		doubleclick on downloaded file to unzip (or unzip it some other way, I suppose)
+		move unzipped folder (Entire Folder!) to Applications folder
+		
+	b. H2O - bleeding edge
+		I suggest downloading this, As Well as the latest stable release
+		http://h2o.ai/download/
+		go to Bleeding Edge link
+		download H2O
+		double click to unzip, but do not move to Applications folder - leave in Downloads
+		
+TO ADD: h2o-dev ???
+TO ADD: IntelliJ (14)
