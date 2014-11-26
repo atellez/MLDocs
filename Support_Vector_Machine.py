@@ -93,3 +93,12 @@ facialHair = [
   (240, 249), (250, 259), (270, 279), (360, 369)
 ]
 
+## Next, we will need to define a function within Python that says for each of these pictures, label it a '1' and then for all the other pictures (i.e. NO facial hair), label it a '0'.
+def facialHair_targets(ranges)
+  y = np.zeroes(faces.target.shape[0])  # This is a Numpy function which says for the 400 images, make a new column, y, and initialize them with all 0 values.
+  for (begin, end) in ranges:
+    y[begin:end + 1] = 1  # For each of the ranges until the last one we defined in 'facialHair', assign it a value of 1.
+  return y
+  
+## Finally, we are going to apply this function to our 'facialHair' subset and then check the results (targets should be either 0 or 1 as opposed to 1-40 in the original targets)
+facialHair_target = facialHair_targets(facialHair)
