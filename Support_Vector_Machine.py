@@ -111,3 +111,18 @@ print np.min(faces.target), np.max(facialHair_target) # Should return a min of 0
 
 ## Step 7: re-split data again into train and testing and score on training datasets.
 ## The reason we need to re-split again is because the old y_train and y_test were the original faces.target which had labels numbered 0-39. Now, we are saying use the new target (facialHair_target) which is only labeled 0 to 1.
+X_train_2, X_test_2, y_train_2, y_test_2 = train_test_split(faces.data, facialHair_target, test_size=0.2, random_state=0)
+svc_linear_2 = SVC(kernel = 'linear')
+svc_linear_2.fit(X_train_2, y_train_2)
+print "Training set accuracy for Linear Kernel:"
+print svc_linear_2.score(X_train_2, y_train_2) # I get 100% yet again! 
+
+## Now we are going to introduce again the confusion matrix but also a new report which gives a statistic called an F1 score. In ML-geek terms, an F1 score is an overall accuracy score between 0 and 1. Great models have scores close to 1 and terrible models have scores close to 0.  This is a measure of how accurate are our predictions on average.
+from sklearn import metrics
+y_prediction = svc_linear_2.predict(X_test_2)
+
+print "Classification Metrics:"
+print metrics.classification_report(y_test_2, y_prediction)
+print "Good 'Ole Confusion Matrix:"
+print metrics.confusion_matrix(y_test_2, y_prediction
+## Pretty good on this new dataset!
