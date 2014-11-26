@@ -1,6 +1,6 @@
-#How to set up a Mac with everything we use for data analysis.
+How to set up a Mac with everything we use for data analysis.
 
-###Outline:
+Outline:
 0. Essentials
 1. R
 2. python
@@ -9,29 +9,45 @@
 
 
 
-##0. Essentials I can't live without:
-      - Chrome (https://www.google.com/chrome/browser/#eula)
-      - Skype
-      - TextWrangler
-      - gitHub
+0. Essentials I can't live without:
+    a. Chrome
+        web browser
+        https://www.google.com/chrome/browser/#eula
+        just download and set as default and add to applications folder
+
+    b. Skype 
+        ummm... skype? 
+        messaging and video conference tool
+        http://www.skype.com/en/download-skype/skype-for-computer/
+        just download and add into 
+
+    c. TextWrangler
+        text editor that handles all sorts of files and doesn't mess up encodings
+        http://www.barebones.com/products/textwrangler/
+
+    d. gitHub 
+        document repository that allows easy sharing
+        https://mac.github.com/
+        download GitHub for Mac, open application, login, and on "Configure Git" page click to "Install Command Line Tools"
+
       - join.me
       - FreeFileSync
       - FileZilla
 
-##1. R
+1. R
       - R
       - RStudio
 
-##2. Python
+2. Python
       - python?
       - PyCharm?
       - Scikit-Learn
 
-##3. Java
+3. Java
       - Java
       - Maven
       - Eclipse (Kepler)
 
-##4. h2o
-      - h2o
+4. h2o
+       h2o
       - IntelliJ (14)
