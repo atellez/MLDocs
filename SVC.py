@@ -12,7 +12,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 ## Step 1: Get Data
-## You will see that the above 3 imports are usually the very first lines of code for most examples of scikit learn.
+## You will see that the above 3 imports are usually the very first lines of code for most examples of scikit learn. We are simply importing the 'Big 3' packages that are most common to running ML algorithims in Python.
 from sklearn.datasets import fetch_olivetti_faces
 faces = fetch_olivetti_faces()
 faces.keys()
@@ -45,8 +45,9 @@ from sklearn.svm import SVC  #Note that this is a classification problem. If thi
 
 ## The most important parameter in the SVC class is the kernel function which is defaulted to the 'rbf' kernel which allows us to model non-linear problems.  To start we will use the 'rbf' kernel and then the 'tanh' kernel.
 ## Note that there are 3 other kernels we can employ: 'linear', 'polynomial' and 'sigmoid' (tanh)
-svc_rbf = SVC()  #Recall that the default is rbf
-svc_liner = SVC(kernel='sigmoid')
+svc_rbf = SVC(kernel='rbf')  #Recall that the default is rbf
+svc_sigmoid = SVC(kernel='sigmoid')
+svc_linear = SVC(kernel='linear')
 
 ## Step 4: Split data into training and testing
 ## As always, we need to partition our dataset into a training and testing set.  Lucky for you scikit learn has a nice and convenient function that allows us to do this:
@@ -57,6 +58,29 @@ X_train, X_test, y_train, y_test = train_test_split(faces.data, faces.target, te
 print X_train.shape, y_train.shape # Should read: (320, 4096) (320, ). This basically says there are 320 training instances, 4,096 features wide.  Our y_train contains the target values for the 320 data points.
 
 ## Step 5: Train our models and score them against the hold out set.
+## The basic steps are a) call the ML algorithm class (done) b) run it on the training set, c) predict the testing dataset, and d) look at the confusion matrix
+## First, we are going to import the 'metrics' library from scikit which will allow us to score and get the accuracy on our models.
+from sklearn import metrics
+svc_rbf.fit(X_train, y_train)
+svc_sigmoid.fit(X_train, y_train)
+svc_linear.fit(X_train, y_train)
 
+print "Training set accuracy for RBF Kernel:"
+print svc_rbf.score(X_train, y_train) # I get 12% Accuracy! Yikes!
 
+print "Training set accuracy for Sigmoid Kernel:"
+print svc_sigmoid.score(X_train, y_train) # 3% Accuracy...even worse! Is there any hope?!
+
+print "Training set accuracy for Linear Kernel:"
+print svc_linear.score(X_train, y_train) # I get 100% Accuracy(!!) Is that even right?! We'll see...
+
+## Whoa, that can't be right huh? 100% Accuracy?! 'Nothing is 100% accurate!', you're thinking. Well, that's the beauty of having a TEST hold out dataset and we are now going to take our trained Support Vector Machine and see how it does against the hold out dataset.
+print "Testing set accuracy for RBF Kernel:"
+print svc_rbf.score(X_test, y_test) # Yuck..0% accuracy. Put this model on failblog.com
+
+print "Testing set accuracy for Sigmoid Kernel:"
+print svc_sigmoid.score(X_test, y_test) # Eeks...also 0%.
+
+print "Testing set accuracy for Linear Kernel:"
+print svc_linear.score(X_test, y_test) # ahhh...intersting, I get ~99% Accuracy.
 
