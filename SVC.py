@@ -55,3 +55,8 @@ X_train, X_test, y_train, y_test = train_test_split(faces.data, faces.target, te
 
 ## To check that we did this correctly, let's just check a few things using the functions we already know:
 print X_train.shape, y_train.shape # Should read: (320, 4096) (320, ). This basically says there are 320 training instances, 4,096 features wide.  Our y_train contains the target values for the 320 data points.
+
+## Step 5: Train our models and score them against the hold out set.
+
+
+
