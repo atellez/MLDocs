@@ -1,13 +1,5 @@
 How to set up a Mac with everything we use for data analysis.
 
-Outline:
-0. Essentials
-1. R
-2. python
-3. java
-4. h2o
-
-
 
 0. Essentials I can't live without:
     a. Chrome
@@ -40,30 +32,74 @@ Outline:
 		https://www.join.me/en
 		scroll down to "Priced for all" section / "Basic" / click "Download desktop app"
 		download and add to applications folder
-		
+
 		
 
-1. R
+1. Java		
+	a. Java (JDK)
+		in Terminal, run "java -version" to check whether you have Java
+		http://www.oracle.com/technetwork/java/javase/downloads/index.html
+		under Standard Edition, select JDK download
+		accept license agreement and download "Mac OS X x64" file
+		run installer, accepting defaults
+		in Terminal, run "java -version" again, to check whether you have Java NOW
+		
+	b. Java (Legacy)
+		http://support.apple.com/kb/DL1572
+		download, run installer, accepting defaults
+		
+	b. Maven
+	
+	c. Eclipse (Kepler)
+
+		
+
+2. R
 	a. R
 		http://cran.rstudio.com/
 		click on "Download R for (Mac) OS X"
 		download "R-3.1.2-mavericks.pkg"
-		open application, go through install accepting defaults
+		run installer, accepting defaults
 		
 	b. RStudio
 		better GUI for R
 		http://www.rstudio.com/products/rstudio/download/
-		download installer, add to applications folder, run application
+		download, open, and add to applications folder
+	
+TO ADD: main packages to install in R
 
-2. Python
-      - python?
-      - PyCharm?
-      - Scikit-Learn
 
-3. Java
-      - Java
-      - Maven
-      - Eclipse (Kepler)
+
+
+3. Python
+	a. Python
+		https://www.python.org/downloads/mac-osx/
+		choose latest Python 3 release
+		scroll to the bottom, and in "Files", download "Mac OS X 64-bit/32-bit installer"
+		run installer, accepting defaults
+		
+	b. python setup tools
+		in Terminal, run "curl https://bootstrap.pypa.io/ez_setup.py -o - | sudo python"
+			Note: you might need to enter your password
+		if you get a pop-up: "Svn command requires command line developer tools", install.
+	
+	c. python package index
+		in Terminal, run "sudo easy_install pip" 
+		
+	d. scikit-learn
+		in Terminal, run "sudo pip install -U numpy scipy scikit-learn"
+		
+	e. iPython notebooks?
+		in Terminal, run 'sudo pip install "ipython[notebook]" '
+
+	f. PyCharm
+		nice python editor
+		https://www.jetbrains.com/pycharm/download/
+		download community edition, open, and add to applications folder
+		run program, selecting "I do not have a previous version..." option at startup
+			Note: if Java error pops up, please see 1b for installing Legacy Java
+	
+
 
 4. h2o
        h2o
