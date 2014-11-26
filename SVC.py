@@ -84,3 +84,12 @@ print svc_sigmoid.score(X_test, y_test) # Eeks...also 0%.
 print "Testing set accuracy for Linear Kernel:"
 print svc_linear.score(X_test, y_test) # ahhh...intersting, I get ~99% Accuracy.
 
+## Indeed, we see the power of Support Vector Machines and in particular, the linear kernel. But let's keep our healthy skepticism and ask a different question:
+## Rather than try to classify faces to their IDs, let's see if we can identify those faces that have facial hair from those that do not.
+## If you want to see for yourself the entire Olivetti faces pictures, copy+paste this into your web-browser: http://www.cs.nyu.edu/~roweis/data/olivettifaces.gif
+## Step 1 is to define the ranges of pictures that of men that have OBVIOUS facial hair (stubble doesn't count!):
+facialHair = [
+  (60, 69), (100, 109), (130, 139), (160, 169),
+  (240, 249), (250, 259), (270, 279), (360, 369)
+]
+
