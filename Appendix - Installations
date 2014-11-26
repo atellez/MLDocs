@@ -14,29 +14,46 @@ Outline:
         web browser
         https://www.google.com/chrome/browser/#eula
         just download and set as default and add to applications folder
+        suggested: add to Dock
 
     b. Skype 
         ummm... skype? 
         messaging and video conference tool
         http://www.skype.com/en/download-skype/skype-for-computer/
-        just download and add into 
+        just download and add to applications folder
+        suggested: add to Dock
 
     c. TextWrangler
         text editor that handles all sorts of files and doesn't mess up encodings
         http://www.barebones.com/products/textwrangler/
+        just download and add to applications folder
+        suggested: add to Doc
 
     d. gitHub 
         document repository that allows easy sharing
         https://mac.github.com/
-        download GitHub for Mac, open application, login, and on "Configure Git" page click to "Install Command Line Tools"
+        download GitHub for Mac, add to applications folder, open application
+        login and on "Configure Git" page click to "Install Command Line Tools"
 
-      - join.me
-      - FreeFileSync
-      - FileZilla
+	e. join.me
+		screen sharing with VoIP
+		https://www.join.me/en
+		scroll down to "Priced for all" section / "Basic" / click "Download desktop app"
+		download and add to applications folder
+		
+		
 
 1. R
-      - R
-      - RStudio
+	a. R
+		http://cran.rstudio.com/
+		click on "Download R for (Mac) OS X"
+		download "R-3.1.2-mavericks.pkg"
+		open application, go through install accepting defaults
+		
+	b. RStudio
+		better GUI for R
+		http://www.rstudio.com/products/rstudio/download/
+		download installer, add to applications folder, run application
 
 2. Python
       - python?
