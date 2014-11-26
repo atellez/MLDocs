@@ -1,0 +1,37 @@
+#How to set up a Mac with everything we use for data analysis.
+
+###Outline:
+0. Essentials
+1. R
+2. python
+3. java
+4. h2o
+
+
+
+##0. Essentials I can't live without:
+      - Chrome (https://www.google.com/chrome/browser/#eula)
+      - Skype
+      - TextWrangler
+      - gitHub
+      - join.me
+      - FreeFileSync
+      - FileZilla
+
+##1. R
+      - R
+      - RStudio
+
+##2. Python
+      - python?
+      - PyCharm?
+      - Scikit-Learn
+
+##3. Java
+      - Java
+      - Maven
+      - Eclipse (Kepler)
+
+##4. h2o
+      - h2o
+      - IntelliJ (14)
