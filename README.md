@@ -1,5 +1,5 @@
 
-Machine Learning for Dummies
+ML4D - MachineLearning4Dummies
 ======
 
 ======
