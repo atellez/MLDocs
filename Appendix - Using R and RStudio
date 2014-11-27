@@ -1,0 +1,183 @@
+Using R and RStudio
+
+
+This document will provide you with a brief overview of RStudio and the very basics of using R.
+If you have not yet installed R and RStudio, please refer to "Appendix - Installations".
+	
+
+1. What does what? RStudio layout. 
+
+	Please run RStudio.
+	When the window opens up, you will see that it is split into 3 main areas.
+	The left side of the window is the Console.
+		Console is where code is actually run. Think of it as your R-language Terminal.
+		
+	The upper right rectangle has two tabs: Environment and History.
+		Once you put data into R, or save a function in R, or basically store anything, 
+		you will be able to see the saved object in the Environment tab.
+		The History tab will show you the history of commands you run in the Console.
+		
+	The lower right rectangle has 5 different tabs. Let's go through them.
+		Files is a simple browser of the files on your computer.
+		Plots is a window where images that you produce with R will be previewed.
+		Packages gives you a list of "packages" (extensions, libraries, whatever) 
+			that you currently have installed.
+			To install new packages, click Install in the left upper corner of this tab.
+			To let a package be used, run library("packageName") in Console, 
+			or click on the small box to the left of the package name in Packages.
+		Help is a browser that will show package and function descriptions.
+			To use, find magnifying glass symbol in upper right of Help tab, 
+			and start typing a function or package name, for example "nrow".
+		Viewer is a window for displaying local web content that you produce with R.
+		
+		
+		
+2. I want to actually DO something! Nope. A tiny bit of necessary setup first.
+
+	Ok. 
+	First of all, we're going to do just a bit of setup.
+	R allows history and your "current state" to be saved as a "project".
+	For this, let's set up a "test" project.
+		In the upper right corner, find "Project: (None)" and click on this text.
+		Select "New Project..." 
+			(if asked whether you want to save current Workspace, say Don't Save)
+		Create Project from: New Directory
+		Project Type: Empty Project
+		Directory Name: "test"
+		Create project as subdirectory of: ~/r_workspaces
+			(I created an r_workspaces directory in my home folder, 
+			and I encourage you to do the same)
+		Create Project.
+		
+	Now that you're in a separate project, let's also create a .R file that will hold our R script.
+		In the upper left corner of RStudio, click on the icon of 
+			a white rectangle with a green circle and white cross in the circle.
+		In the drop down menu, select "R Script"
+		You will see a text editor window expand from the upper left corner,
+			"squishing" the Console space.
+		Click on the diskette icon to save the file as "test1.R"
+	
+	And a teeny tiny thing to make life easier later: let's turn on word wrap.
+		In top bar, go to RStudio / Preferences / Code Editing
+		About 2/3 of the way down the list, you will find "Soft-wrap R source files"
+		Check that checkbox and click OK.
+	Thanks.
+		
+		
+		
+3. Now we can actually get going.
+	
+	The basics of R are actually quite simple.
+	There isn't a precise format like in Java, or required identifying headers like in html.
+	
+	When you want to put a value into an object, you literally write an arrow into the object:
+		a <- 1
+	Try typing the line above into Console and hit Enter.
+	Can you see a new "thing" in the Environment tab (upper right box)?
+	You've created an object whose name is "a", and whose value is 1.
+	
+	Now type the following into your test1.R file.
+		a <- 1   
+		b <- "red"
+	Then, with your cursor on the second line, hit Command-Enter.
+	If you glance down into Console, you'll see that the line you were on 
+		in the text editor when you hit Command-Enter was executed in Console.
+	And if you look in the Environment tab, you'll see an object named "b" was created, 
+		containing the string "red".
+	
+	But that's easy - 1 variable holding 1 value, any language can do that.
+	Can R do more?
+	But of course!
+	Add this to your test1.R file, and then let's talk about what it does:
+		c <- data.frame(
+    		V1=c(2, 3, 5), 
+    		V2=c("aa", "bb", "cc"), 
+    		V3=c(TRUE, FALSE, TRUE),
+    		stringsAsFactors=FALSE)
+	First of all, as you can see, R is very lenient about line breaks and indentation.
+	Write code however makes sense to you! If you want it as one line, sure. If not - then not.
+		R keeps track of parentheses and knows when you're done by that.
+	
+	To run it, put your cursor on the "c <- ..." line and hit Cmd-Enter 5 times (1 for each line).
+	
+	So what are we doing?
+	We're making a thingy called a "data frame" and storing it in an object named "c".
+	You can imagine a data frame is like one Excel sheet - a table with some columns and some rows.
+	We're telling R: 
+		I want a table, 
+			and the first column is going to be called V1,
+				and it's going to have 2, 3, and 5 in it, in that order.
+			and the second column is going to be called V2,
+				and it's going to have the strings "aa", "bb", and "cc" in that order.
+			and the third column is going to be called V3,
+				and it's going to store a boolean (also called logical) value TRUE / FALSE.
+	
+	R is smart. You don't need to tell it whether this is a list of 3 numbers or 3 strings.
+	
+	However, R likes making things efficient, so when you give it a list of strings, 
+		normally, when given a list of strings, it would make a "list of labels",
+		and instead of saving each string, it would just save "what number label is this".
+	So if you had c("red","red","yellow","green","red")
+		it would be saved as 1,1,2,3,1
+		with R keeping track that 1 means "red", 2 means "yellow", and 3 means "green"
+	This type of value is called a Factor, and it's the reason we have that last line
+		" stringsAsFactors=FALSE ".
+	If we change that FALSE to TRUE and rerun the 5 lines, instead of V2 saving its values as strings,
+		that column will be a Factor with 3 levels, instead.
+	
+	And, as you've probably picked up already, we're using one more thing in this code:
+		c(...)
+	It stands for either combine or concatenate, depending on who you believe.
+	What it does is it combines its arguments to form a vector or list.
+	Play around with it a bit, if you want, but I'm going to continue on.
+	
+	
+	So what do you do, once you assign some variables?
+	A logical next step is to see whether you were successful.
+	The easy way to do it is to get a summary of your object, and to see its structure.
+	Which is exactly what we're going to do.
+		str(c)
+		summary(c)
+	
+	The str command first shows us the type of the object - 'data.frame'
+	'3 obs. of  3 variables' - observations are rows, variables are columns
+	The variables are described likewise: name, type, and some sample rows.
+	If you reran c with stringsAsFactors=TRUE, your V2 variable/column will have type Factor
+	If you left c as originally built with stringsAsFactors=FALSE, V2 will be of type chr (character)
+	
+	The summary command is likewise almost self-explanatory.
+	V1, because it's a column of numbers, will show you statistics about distribution: 
+		minimum, 1st quartile, median, mean, 3rd quartile, and max.
+	V2, if it's a column of Factors, will tell you how many of each label there are.
+	If V2 is a column of strings/characters, it will only tell you the number of rows - the length.
+	V3, as a column of logicals/booleans, will tell you the number of Trues and Falses, and the number of NAs.
+	
+	
+	Ok, one more thing, and then I'll let you go.
+	
+	We are going to upload a dataset.
+	Go to http://archive.ics.uci.edu/ml/datasets/Iris
+	Click on Data Folder, and save iris.data file as iris.csv
+	In RStudio, at the top of the Environment tab, click on "Import Dataset", and "from text file"
+	Navigate to where you saved iris.csv, select it, and click Open.
+	An Import Dataset window will pop up.
+	Just accept defaults and click Import.
+	What happened?
+	You can see a table view of the data frame as a tab in the same place as your test1.R script
+	In Console, you can see the command that ran to import the dataset and then show you a view of it
+		iris <- read.csv("~/Downloads/iris.csv", header=FALSE)
+		View(iris)
+	In Environment, you can see a new object named "iris" of type dataframe was created
+	
+	And just to make sure you remember how to, 
+	try to view the structure of the iris data set?
+		str(iris)
+	
+	And summarize it?
+		summary(iris)
+		
+		
+		
+Ok! I think you're good to go and explore on your own!
+If you have questions, keep in mind that R has an amazing and long-running community, 
+so just trust in the mighty power of the internet, and I'm sure the answer will be there.
