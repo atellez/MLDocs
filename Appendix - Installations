@@ -138,5 +138,27 @@ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/
 		download H2O
 		double click to unzip, but do not move to Applications folder - leave in Downloads
 		
-TO ADD: h2o-dev ???
-TO ADD: IntelliJ (14)
+	c. h2o-dev
+		https://github.com/h2oai/h2o-dev
+		on right hand side, select "Clone in Desktop"
+		in Terminal, run: sudo pip install grip
+		check that you have Java installed: in Terminal, run "javac -version" 
+		in Terminal, run: brew install node
+		navigate to your git repository -> h2o-dev
+			(I set mine under ~/git_repo, so I can run "cd ~/git_repo/h2o-dev" )
+		in Terminal, run: ./gradlew build
+		(this is a working copy, build might not run the first time, don't be discouraged)
+		(Nov 26, 2014: needed to copy "man-old" folder from /git_repo/h2o-dev/h2o-r/ 
+			to /git_repo/h2o-dev/h2o-r/h2o-package as "man" )
+		
+		once a successful build is completed:
+		in terminal, navigate to /git_repo/h2o-dev/build/  (cd /git_repo/h2o-dev/build)
+		in terminal, run "java -jar h2o.jar"
+		NOTE: KEEP TERMINAL RUNNING!!!
+		in a web browser (Chrome), type "localhost:54321" in address bar and hit enter
+		you will be directed to the h2o-Flow page, which is a editor of executable "cells"
+		Please see "Appendix - Using H2O" for more information on using H2O
+		
+		
+		
+TO ADD: 5. Spark, Scala, and IntelliJ 14
