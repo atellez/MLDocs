@@ -14,5 +14,13 @@ cd wherever/you/downloaded/spark
 import org.apache.spark.mllib.recommendation.ALS
 import org.apache.spark.mllib.recommendation.Rating
 ## The first import loads the ALS (Alternating Least Squares) library that we will use to build our recommendation engine.
-## The second import loads in a very special RDD type called 'Rating' which is a special form of RDD that requires the follow syntax: (UserID, ProductID, Rating)
-## Essentially, 'Rating' is a dataset of triplets that we will feed into the ALS class to use for predicting new books to read for the readers in our book club!
+## The second import loads in a very special RDD type called 'Rating' which is a special form of RDD that requires the follow syntax: (UserID[Int], ProductID[Int], Rating[Double])
+## Essentially, 'Rating' is a dataset of triplets that we will feed into the ALS class to use for predicting new books to read for the readers in our book club! 
+
+val rawData = sc.textFile("wherever/you/downloaded/theBookRating/data/BX-Ratings.csv")
+val rawRatings = rawData.map(_.split(","))
+val ratings = rawRatings.map{ case Array(userID, isbn, rating) => Rating(userID.toInt, isbn.toInt, rating.toDouble) }
+
+
+
+
