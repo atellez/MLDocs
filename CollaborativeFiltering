@@ -21,6 +21,9 @@ val rawData = sc.textFile("wherever/you/downloaded/theBookRating/data/BX-Ratings
 val rawRatings = rawData.map(_.split(","))
 val ratings = rawRatings.map{ case Array(userID, isbn, rating) => Rating(userID.toInt, isbn.toInt, rating.toDouble) }
 
+rawData.count
+ratings.count
+ratings.take(10).foreach(println)
 
 
 
