@@ -41,16 +41,29 @@ How to set up a Mac with everything we use for data analysis.
 		under Standard Edition, select JDK download
 		accept license agreement and download "Mac OS X x64" file
 		run installer, accepting defaults
-		in Terminal, run "java -version" again, to check whether you have Java NOW
+		in Terminal, run "java -version" again, to verify that you have Java NOW
 		
 	b. Java (Legacy)
 		http://support.apple.com/kb/DL1572
 		download, run installer, accepting defaults
 		
-TO ADD: Maven
-TO ADD: Eclipse (Kepler)
-
+	c. Maven
+		in Terminal, run "mvn -version" to check whether you have Maven installed
+		if Maven is not installed, run (still in Terminal):
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+		press RETURN / ENTER to install, and put in your password
+		once Homebrew is installed, run (still in Terminal): "brew install maven"
+		in Terminal, run "mvn --version" to verify that you have Maven installed NOW
 	
+	d. Eclipse
+		http://www.eclipse.org/downloads/packages/eclipse-ide-java-developers/lunasr1
+		go to Mac OS X 64-bit, and download file
+		unzip file, then move unzipped folder into Applications folder
+		go inside the folder and run the Eclipse application
+		when asked to select a workspace, I suggest creating an Eclipse_workspace 
+			or mycode folder in your home directory
+		
+		
 		
 2. R
 	a. R
