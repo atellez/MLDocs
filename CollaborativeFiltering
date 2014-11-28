@@ -18,12 +18,14 @@ import org.apache.spark.mllib.recommendation.Rating
 ## Essentially, 'Rating' is a dataset of triplets that we will feed into the ALS class to use for predicting new books to read for the readers in our book club! 
 
 val rawData = sc.textFile("wherever/you/downloaded/theBookRating/data/BX-Ratings.csv")
-val rawRatings = rawData.map(_.split(","))
-val ratings = rawRatings.map{ case Array(userID, isbn, rating) => Rating(userID.toInt, isbn.toInt, rating.toDouble) }
+val rawRatings = rawData.map(_.split("\t"))
+val ratings = rawRatings.map{ case Array(user, isbn, rating) => Rating(user.toInt, isbn.toInt, rating.toDouble) }
 
 rawData.count
 ratings.count
 ratings.take(10).foreach(println)
 
-
+## So the first thig we need to do is load in our dataset which is basically the directory you stored the BX-Ratings.csv file.
+## Next, we are going to 'split' the file 'rawData' into a new dataset called 'rawRatings'.  Note that new columns are distinguished by an ';'.
+## Finally, we are going to convert 'rawRatings' dataset into the proper 'ratings' dataset that is needed to run our Alternating Least Squares (ALS) algorithm.
 
