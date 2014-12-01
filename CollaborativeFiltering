@@ -41,4 +41,6 @@ ALS.train
 ## Step 2: Train the algorithm
 ## The only inputs required for the model are: 'Rank' - # of hidden features in our model, 'Iterations' - # of iterations to run. Somewhere between 10-20 is usually sufficient for most datasets, and finally, 'Lambda' - ensures we do not over-fit our model; a lambda value of 0.01 is fine for most problems so let's get to training!
 
-val bookEngine = ALS.train(ratings, 60, 10, 0.01)
+val bookEngine = ALS.train(ratings, 50, 10, 0.01)
+## So in words, we are training our Alternating Least Squares algorithm on 50 hidden features of 10 iterations with a lambda (AKA learning rate) of 0.01.
+## As soon as you press 'ENTER' you will see a ton of logs being run wich is just the model being built and iterations being run.  In the end, you will get a new line of scala which denotes the model is finished running.
