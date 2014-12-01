@@ -18,7 +18,7 @@ import org.apache.spark.mllib.recommendation.Rating
 ## Essentially, 'Rating' is a dataset of triplets that we will feed into the ALS class to use for predicting new books to read for the readers in our book club! 
 
 val rawData = sc.textFile("wherever/you/downloaded/theBookRating/data/BX-Ratings.csv")
-val rawRatings = rawData.map(_.split("\t"))
+val rawRatings = rawData.map(_.split(","))
 val ratings = rawRatings.map{ case Array(user, isbn, rating) => Rating(user.toInt, isbn.toInt, rating.toDouble) }
 
 rawData.count
@@ -26,6 +26,19 @@ ratings.count
 ratings.take(10).foreach(println)
 
 ## So the first thig we need to do is load in our dataset which is basically the directory you stored the BX-Ratings.csv file.
-## Next, we are going to 'split' the file 'rawData' into a new dataset called 'rawRatings'.  Note that new columns are distinguished by an ';'.
-## Finally, we are going to convert 'rawRatings' dataset into the proper 'ratings' dataset that is needed to run our Alternating Least Squares (ALS) algorithm.
+## Next, we are going to 'split' the file 'rawData' into a new dataset called 'rawRatings'.  Note that new columns are distinguished by a ','.
+## Finally, we are going to convert 'rawRatings' dataset into the proper 'ratings' dataset that is needed to run our Alternating Least Squares (ALS) algorithm while at the same time giving names to the features (there is no header on the dataset so this is where we insert the hearder names).  We finally check our work by looking at the counts and then a small sample of the ratings.
+## BUT WAIT, how did you know to convert the transformed dataset, rawRatings, into a new RDD Ratings dataset?  Luckily in Spark you can 'error-out' and see why you error'd. Just type this into your browser and see what happens:
 
+ALS. #Press 'TAB' instead of enter
+## This will return you a set of parameters needed to run the ALS algorithm in Spark.
+## You should see this: asInstanceOf    isInstanceOf    toString        train           trainImplicit
+## These are the 'variations' of ALS at our disposal.  For this tutorial, we are going to use the 'train' method but very often in business we see the 'trainImplicit' approach because not everyone collects customer ratings.
+## Now, type this in and just press 'ENTER' aftwards:
+ALS.train
+## The error says we didn't specify a 'ratings' RDD which is required to train this algorithm and as such we need to make a 'ratings' dataset.
+
+## Step 2: Train the algorithm
+## The only inputs required for the model are: 'Rank' - # of hidden features in our model, 'Iterations' - # of iterations to run. Somewhere between 10-20 is usually sufficient for most datasets, and finally, 'Lambda' - ensures we do not over-fit our model; a lambda value of 0.01 is fine for most problems so let's get to training!
+
+val bookEngine = ALS.train(ratings, 60, 10, 0.01)
