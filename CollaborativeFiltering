@@ -45,3 +45,8 @@ val bookEngine = ALS.train(ratings, 20, 10, 0.01)
 ## So in words, we are training our Alternating Least Squares algorithm on 20 hidden features of 10 iterations with a lambda (AKA learning rate) of 0.01.
 ## As soon as you press 'ENTER' you will see a ton of logs being run wich is just the model being built and iterations being run.  In the end, you will get a new line of scala which denotes the model is finished running.
 ## Most of the time in practice you are going to want more than JUST 20 hidden features but if you are running Spark locally on your computer you will probably tap all of your memory doing more so let's just keep it sweet 'n simple with 20 hidden features for now.
+
+## Step 3: What does it all mean?
+## So we ran our collaborative filtering model......then what?
+## First off, it's time to test how we did by looking at some case examples!  Let's start off by first picking a person, seeing what books they like and then seeing the recommended books.
+
