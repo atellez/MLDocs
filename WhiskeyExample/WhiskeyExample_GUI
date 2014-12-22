@@ -1,0 +1,62 @@
+cd ~/Downloads
+unzip cd h2o-2.9.0.1556.zip
+cd cd h2o-2.9.0.1556
+java -Xmx1g -jar h2o.jar
+
+// with this running in terminal, navigate to http://localhost:54321/ in your favorite browser //
+
+1. Upload data
+In the top row toolbar, navigate to Data / Upload.
+Select whiskey_data.csv provided in this repository.
+Click Upload.
+On following page, click Submit.
+When Inspect page loads, check that the dataset has 13 columns and 86 rows.
+
+
+2. PCA (on original data)
+In the top row toolbar, navigate to Model / Principal Component Analysis.
+Under "source", start typing "whiskey" - or whatever your whiskey data file was named.
+"Ignored columns" will reload with a list of the 13 columns available in the dataset.
+Select "Distillery" as an ignored column.
+Submit.
+When PCA Model View comes up, click on "Scree & Variance Plots" to toggle Scree and Cumulative Variance Plots.
+Also look at "Cum Prop Var" row of table below to check that at PC7, cumulative variance first passes over 0.85
+
+To transform data, according to found PCA properties, click on "Score on dataset" (above Scree Plot).
+Under "Source", again, start typing "whiskey" or whatever your whiskey data file was named.
+Leave "Model" name as is.
+Change "num pc" to 7 (as we are choosing to only take the first 7 components).
+Click Submit.
+When results come up, click on "Download as CSV" in long text list of options at the top of the page.
+Once PCA-transformed set has been downloaded, open the file as a spreadsheet, and open your original whiskey dataset, 
+and copy the "Distillery" column to the PCA spreadsheet, effectively appending the label to the end of each row.
+Save resulting spreadsheet (7 PCA columns - PC0 through PC6, and Distillery column) as another csv (i.e. PCA_whiskey.csv)
+
+
+3. k-means clustering (on PCA-ed data)
+Return to h2o-GUI (at http://localhost:54321/ ) and repeat upload process (step 1) to upload PCA_whiskey.csv
+When Inspect page loads, dataset should have 8 columns and 86 rows.
+
+In top row toolbar, navigate to Model / K-Means Clustering.
+Under "Source", start typing "PCA_whiskey" or whatever your second dataset is called.
+In "Ignored columns", select "Distillery".
+Under "k", instead of "2", input "2,3,4,5,6,7,8,9,10,11,12,13,14,15". 
+This will run all 14 models in Grid Search mode, rather than you having to do each one by hand.
+Click Submit.
+
+Grid Search Progress page will load, and result in a table where each row has a blue link to a KMeans model (in column titled "model key")
+Copy this entire table into a spreadsheet, including headers. PLEASE DO NOT CLOSE PAGE (for your own sanity).
+Sort by "k" column, then graph "prediction error", using "k" as labels for the horizontal axis.
+Choose k at which prediction error stops dropping as much.
+
+Return back to h2o-GUI (at http://localhost:54321/ ) GridSearchProgress page (that you had open last)
+Select the model key link for your chosen k (we chose 11).
+On KMeans2ModelView page which opens up, scroll to the bottom, and click on "View the row-by-row cluster assignments" link at the bottom of the page.
+When results come up, click on "Download as CSV" in long text list of options at the top of the page.
+Once KMeans-labeled set has been downloaded, open the file as a spreadsheet, and open your original whiskey dataset.
+Copy the Distillery column to the KMeans spreadsheet, effectively appending the label to each row.
+Save resulting spreadsheet as another csv (KMeans_PCA_whiskey.csv)
+
+Your resulting dataset should be simply 2 columns: Cluster ID, and Distillery.
+Finally, filter by Cluster ID to see whiskeys that are similar to one another.
+And there you have your 11 whiskey clusters, based on K-means clustering and Principal Component Analysis.

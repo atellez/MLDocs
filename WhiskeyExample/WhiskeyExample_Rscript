@@ -1,0 +1,61 @@
+library("h2o")  #Note: requires bleeding edge h2o (Nov 4, 2014 or later)
+localH2O <- h2o.init(ip = "localhost", port = 54321, startH2O = TRUE)
+
+whiskey <- new("H2OParsedData", h2o.importFile(localH2O, "/Users/oletas01/Documents/whiskey_main.csv"))
+
+whiskey.pca <- h2o.prcomp(data=whiskey[,2:13], standardize = TRUE)
+screeplot(whiskey.pca)
+summary(whiskey.pca)
+
+#print(whiskey.pca)
+
+predict.pca <- h2o.predict( object = whiskey.pca, newdata = whiskey, num_pc = 7)
+print(predict.pca)
+
+
+
+resultsPCA <- as.data.frame.H2OParsedData(predict.pca)
+resultsPCA$Distillery <- as.data.frame.H2OParsedData(whiskey)[,1]
+
+whiskey.pca.results <- as.h2o(localH2O, resultsPCA)
+
+k2 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 2)
+k3 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 3)
+k4 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 4)
+k5 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 5)
+k6 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 6)
+k7 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 7)
+k8 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 8)
+k9 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 9)
+k10 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 10)
+k11 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 11)
+k12 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 12)
+k13 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 13)
+k14 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 14)
+k15 <- h2o.kmeans(whiskey.pca.results[,1:7], centers = 15)
+
+kTSWS <- data.frame(clusters = 2:15, totalSumOfSquares = c(k2@model$tot.withinss,
+  k3@model$tot.withinss,k4@model$tot.withinss,k5@model$tot.withinss,k6@model$tot.withinss,
+  k7@model$tot.withinss,k8@model$tot.withinss,k9@model$tot.withinss,k10@model$tot.withinss,
+  k11@model$tot.withinss,k12@model$tot.withinss,k13@model$tot.withinss,
+  k14@model$tot.withinss,k15@model$tot.withinss))
+
+plot(kTSWS, type="b")
+
+predict.k <- h2o.predict( object = k11, newdata = whiskey.pca.results)
+print(predict.k)
+
+resultsPCA_kMeans <- as.data.frame.H2OParsedData(predict.k)
+resultsPCA_kMeans$Distillery <- as.data.frame.H2OParsedData(whiskey)[,1]
+
+as.character(resultsPCA_kMeans[resultsPCA_kMeans$predict==0,2])
+as.character(resultsPCA_kMeans[resultsPCA_kMeans$predict==1,2])
+as.character(resultsPCA_kMeans[resultsPCA_kMeans$predict==2,2])
+as.character(resultsPCA_kMeans[resultsPCA_kMeans$predict==3,2])
+as.character(resultsPCA_kMeans[resultsPCA_kMeans$predict==4,2])
+as.character(resultsPCA_kMeans[resultsPCA_kMeans$predict==5,2])
+as.character(resultsPCA_kMeans[resultsPCA_kMeans$predict==6,2])
+as.character(resultsPCA_kMeans[resultsPCA_kMeans$predict==7,2])
+as.character(resultsPCA_kMeans[resultsPCA_kMeans$predict==8,2])
+as.character(resultsPCA_kMeans[resultsPCA_kMeans$predict==9,2])
+as.character(resultsPCA_kMeans[resultsPCA_kMeans$predict==10,2])

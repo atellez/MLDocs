@@ -1,0 +1,132 @@
+
+!!!!!! EXAMPLE NOT COMPLETE - PLEASE DO NOT USE - WAITING FOR RESOLUTION OF SEVERAL ISSUES !!!!!!
+
+Generic SparklingWater setup required:
+Download Spark at https://spark.apache.org/downloads.html
+Download Sparkling Water at http://h2o-release.s3.amazonaws.com/sparkling-water/master/19/index.html
+(And unzip both files).
+
+
+cd ~/Downloads/sparkling-water-0.2.1-19
+export SPARK_HOME=~/Downloads/spark-1.1.0-bin-cdh4     <- IMPORTANT NOTE: NO QUOTATION MARKS HERE!!!
+export MASTER=local-cluster[3,2,1024]
+bin/sparkling-shell
+
+
+
+import org.apache.spark.h2o._
+import org.apache.spark.examples.h2o._
+val h2oContext = new H2OContext(sc).start()
+import h2oContext._
+
+case class Whiskey( val Distillery   : Option[String],
+                    val Body         : Option[Int],
+                    val Sweetness    : Option[Int],
+                    val Smoky        : Option[Int],
+                    val Medicinal    : Option[Int],
+                    val Tobacco      : Option[Int],
+                    val Honey        : Option[Int],
+                    val Spicy        : Option[Int],
+                    val Winey        : Option[Int],
+                    val Nutty        : Option[Int],
+                    val Malty        : Option[Int],
+                    val Fruity       : Option[Int],
+                    val Floral       : Option[Int]) extends Product {
+def productArity: Int = 13
+def isWrongRow():Boolean = (0 until productArity).map( idx => productElement(idx)).forall(e => e==None)
+def productElement(n: Int) = n match {
+    case  0 => 'Distillery
+    case  1 => 'Body
+    case  2 => 'Sweetness
+    case  3 => 'Smoky
+    case  4 => 'Medicinal
+    case  5 => 'Tobacco
+    case  6 => 'Honey
+    case  7 => 'Spicy
+    case  8 => 'Winey
+    case  9 => 'Nutty
+    case 10 => 'Malty
+    case 11 => 'Fruity
+    case 12 => 'Floral
+    case  _ => throw new IndexOutOfBoundsException(n.toString)
+  }
+}
+
+
+                                                            // SECTION COMMENTED OUT, IN WAIT OF BUG FIX //
+                                                            // import java.io.File
+                                                            // val whiskeyBDataFile = "/Users/oletas01/Documents/whiskey_main.csv"
+                                                            // val whiskeyBData = new DataFrame(new File(whiskeyBDataFile))
+                                                            // val whiskeyBTable : RDD[Whiskey] = toRDD[Whiskey](whiskeyBData)
+                                                            // PLEASE CONTINUE FROM HERE //
+
+
+object WhiskeyParse extends Serializable {
+  import org.apache.spark.examples.h2o.SchemaUtils._
+  
+  def apply(row: Array[String]): Whiskey = {
+    val b = if (row.length==13) 0 else 1 
+    new Whiskey(
+      str (row( 0)), // Distillery
+      int (row( 1)), // Body
+      int (row( 2)), // Sweetness
+      int (row( 3)), // Smoky
+      int (row( 4)), // Medicinal
+      int (row( 5)), // Tobacco
+      int (row( 6)), // Honey
+      int (row( 7)), // Spicy
+      int (row( 8)), // Winey
+      int (row( 9)), // Nutty
+      int (row(10)), // Malty
+      int (row(11)), // Fruity
+      int (row(12)))  // Floral
+  }
+}
+val whiskeyDataFile = "/Users/oletas01/Documents/whiskey_main.csv"
+val whiskeyRawData = sc.textFile(whiskeyDataFile,3).cache()
+
+# WORKS, but not correctly #
+val whiskeyTable = whiskeyRawData.map(_.split(","))
+
+# SHOULD work, returns "Task not serializable" - "at org.apache.spark.util.ClosureCleaner$.ensureSerializable(ClosureCleaner.scala:166)"
+val whiskeyTable = whiskeyRawData.map(_.split(",")).map(row => WhiskeyParse(row)).filter(!_.isWrongRow())
+
+
+
+
+whiskeyTable.count
+
+import org.apache.spark.sql.SQLContext
+val sqlContext = new SQLContext(sc)
+import sqlContext._
+whiskeyTable.registerTempTable("WhiskeyORD")
+val mainTable = sql(
+        """SELECT
+          |f.Year,f.Month,f.DayofMonth,
+          |f.CRSDepTime,f.CRSArrTime,f.CRSElapsedTime,
+          |f.UniqueCarrier,f.FlightNum,f.TailNum,
+          |f.Origin,f.Distance,
+          |w.TmaxF,w.TminF,w.TmeanF,w.PrcpIn,w.SnowIn,w.CDD,w.HDD,w.GDD,
+          |f.ArrDelay
+          |FROM FlightsToORD f
+          |JOIN WeatherORD w
+          |ON f.Year=w.Year AND f.Month=w.Month AND f.DayofMonth=w.Day""".stripMargin)
+
+
+
+import hex.deeplearning.DeepLearning
+import hex.deeplearning.DeepLearningModel.DeepLearningParameters
+
+val dlParams = new DeepLearningParameters()
+dlParams._train = whiskeyTable
+dlParams._response_column = 'ArrDelay
+dlParams._classification = false
+dlParams.epochs = 100
+dlParams.hidden = Array(100,50,20)
+
+// Create a job  
+val dl = new DeepLearning(dlParams)
+val dlModel = dl.trainModel.get
+
+
+
